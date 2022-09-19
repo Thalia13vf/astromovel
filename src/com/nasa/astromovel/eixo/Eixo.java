@@ -1,6 +1,5 @@
 package com.nasa.astromovel.eixo;
 
-import com.nasa.astromovel.eixo.State;
 import com.nasa.astromovel.entity.Astromovel;
 
 public class Eixo implements State {

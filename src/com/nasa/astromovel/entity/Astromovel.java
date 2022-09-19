@@ -74,6 +74,11 @@ public class Astromovel {
     }
 
     public void mudarDirecao(String direcao) {
+        if (estaNaBordaDireita()) {
+            this.mudarDirecao("ESQUERDA");
+        }else if (estaNaBordaEsquerda()) {
+            this.mudarDirecao("DIREITA");
+        }
         this.direcaoOlhar.mudarDirecao(direcao);
     }
 }
