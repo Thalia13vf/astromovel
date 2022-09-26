@@ -2,20 +2,19 @@ package com.nasa.astromovel.entity;
 
 import com.nasa.astromovel.direction.Direction;
 import com.nasa.astromovel.direction.Norte;
-import com.nasa.astromovel.eixo.Eixo;
 
 public class Astromovel {
     private int[][] area = new int[10][10];
     private int posicaoX;
     private int posicaoY;
     private Direction direcaoOlhar;
-    private Eixo eixo;
+
+    private String comandoMover;
 
     public Astromovel() {
         this.area[0][0] = 1;
         this.posicaoY = 0;
         this.posicaoX = 0;
-        this.eixo = new Eixo(this);
         this.direcaoOlhar = new Norte(this);
     }
 
@@ -25,23 +24,6 @@ public class Astromovel {
 
     public void setArea(int[][] area) {
         this.area = area;
-    }
-
-    public Eixo getEixo() {
-        return eixo;
-    }
-
-    public void setEixo(Eixo eixo) {
-        this.eixo = eixo;
-    }
-
-    public boolean estaNaBordaDireita() {
-        int bordaLimiteDireita = area.length - 1;
-        return posicaoY == bordaLimiteDireita;
-    }
-
-    public boolean estaNaBordaEsquerda() {
-        return posicaoY == 0;
     }
 
     public int getPosicaoX() {
@@ -62,7 +44,7 @@ public class Astromovel {
 
     public void mostrarPosicaoAstromovel() {
 
-        System.out.println("[y=" + this.posicaoY + "][x=" + this.posicaoX + "]" + "[p="+this.direcaoOlhar.getDirecao() + "]");
+        System.out.println("[y=" + this.posicaoY + "][x=" + this.posicaoX + "]" + "[p=" + this.direcaoOlhar.getDirecao() + "]");
     }
 
     public Direction getDirecaoOlhar() {
@@ -73,12 +55,28 @@ public class Astromovel {
         this.direcaoOlhar = direcaoOlhar;
     }
 
-    public void mudarDirecao(String direcao) {
-        if (estaNaBordaDireita()) {
-            this.mudarDirecao("ESQUERDA");
-        }else if (estaNaBordaEsquerda()) {
-            this.mudarDirecao("DIREITA");
-        }
-        this.direcaoOlhar.mudarDirecao(direcao);
+    public void mover(int quantidade) {
+        this.direcaoOlhar.mover(quantidade);
     }
+
+    public void moverAstromovel(String comando) {
+        this.comandoMover = comando;
+        this.comandoMover();
+    }
+
+    public void comandoMover() {
+        char[] comandos = this.comandoMover.toCharArray();
+        for (char comando : comandos) {
+            if (comando == 'M') {
+                mover(1);
+            }
+            if (comando == 'R') {
+                this.getDirecaoOlhar().mudarDirecao("DIREITA");
+            }
+            if (comando == 'L') {
+                this.getDirecaoOlhar().mudarDirecao("ESQUERDA");
+            }
+        }
+    }
+
 }
